@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>{{ movie.title }} - Details</title>
+</head>
+<body>
+    <header>
+        <h1>{{ movie.title }}</h1>
+        <!-- Thanh tìm kiếm -->
+        <form action="{% url 'index' %}" method="POST">
+            {% csrf_token %}
+            <input type="text" name="title" placeholder="Tìm kiếm phim...">
+            <button type="submit">Tìm kiếm</button>
+        </form>
+    </header>
+
+    <main class="movie-detail">
+        {% if movie.backdrop_path %}
+            <div class="movie-backdrop" style="background-image: url('https://image.tmdb.org/t/p/original{{ movie.backdrop_path }}')"></div>
+        {% endif %}
+        <div class="movie-info">
+            {% if movie.poster_path %}
+                <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" alt="{{ movie.title }}" class="movie-poster">
+            {% endif %}
+            <div class="movie-details">
+                {% if movie.overview %}
+                    <p><strong>Tóm tắt:</strong> {{ movie.overview }}</p>
+                {% endif %}
+                {% if movie.vote_average %}
+                    <p><strong>Đánh giá:</strong> {{ movie.vote_average }} ★</p>
+                {% endif %}
+                {% if movie.genres %}
+                    <p><strong>Thể loại:</strong> {{ movie.genres }}</p>
+                {% endif %}
+                {% if movie.release_date %}
+                    <p><strong>Ngày phát hành:</strong> {{ movie.release_date }}</p>
+                {% endif %} 
+                {% if movie.runtime %}
+                    <p><strong>Thời lượng:</strong> {{ movie.runtime }} phút</p>
+                {% endif %}
+                {% if movie.status %}
+                    <p><strong>Trạng thái:</strong> {{ movie.status }}</p>
+                {% endif %}
+                <p><strong>Diễn Viên:</strong>
+                <div class="cast-list">
+                    {% for actor in cast %}
+                        <div class="actor">
+                            {% if actor.profile_path %}
+                                <img src="{{ actor.profile_path }}" alt="{{ actor.name }}" class="actor-photo">
+                            {% else %}
+                                <img src="{% static 'default_actor_image.png' %}" alt="{{ actor.name }}" class="actor-photo">
+                            {% endif %}
+                            <p>{{ actor.name }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Làm bởi by Thanh Khánh. All rights reserved.</p>
+        
+    </footer>
+    
+
+    <script src="{% static 'script.js' %}"></script>
+    <script>
+        // Lắng nghe sự kiện nhấn phím
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') { // Kiểm tra nếu phím nhấn là Esc
+                window.history.back(); // Quay lại trang trước đó
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,171 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #1a1a1a;
+    color: #ffffff;
+    margin: 0;
+    padding: 20px;
+    background-image: url("../static/image.jpg");
+}
+
+header {
+    text-align: center;
+    background: linear-gradient(90deg, rgba(229, 9, 20, 1) 0%, rgba(75, 75, 75, 1) 100%);
+    padding: 20px 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 48px; /* Tăng kích thước tiêu đề */
+    font-weight: 700; /* Tăng độ dày chữ */
+    color: #fff; /* Màu trắng nổi bật */
+    letter-spacing: 2px; /* Khoảng cách giữa các chữ */
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+input[type="text"] {
+    font-size: 16px;
+    font-weight: 500; /* Chữ đậm hơn */
+    padding: 12px;
+    width: 300px;
+    border: none;
+    border-radius: 30px 0 0 30px;
+    outline: none;
+}
+
+button {
+    font-size: 16px;
+    font-weight: 600; /* Tăng độ dày cho chữ */
+    padding: 12px;
+    border: none;
+    border-radius: 0 30px 30px 0;
+    background-color: #e50914;
+    color: #ffffff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #b20710;
+}
+
+.movie-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.movie-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #282828;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.movie-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(229, 9, 20, 0.6);
+}
+
+.movie-poster {
+    width: 100%;
+    height: auto;
+    border-radius: 10px 10px 0 0;
+}
+
+.movie-title {
+    font-weight: bold;
+    font-size: 18px; /* Tăng kích thước tiêu đề phim */
+    text-align: center;
+    color: #e50914; /* Màu sắc nổi bật */
+    margin-top: 10px;
+}
+
+.movie-detail {
+    font-size: 18px; /* Tăng kích thước chữ trong phần chi tiết */
+    line-height: 1.6; /* Tăng khoảng cách giữa các dòng để dễ đọc hơn */
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    color: #ffffff;
+}
+
+.movie-backdrop {
+    width: 100vw;
+    height: 100vh;
+    background-size: cover;
+    background-position: center ;
+    border-radius: 15px;
+    filter: blur(3px);
+    position: absolute;;
+    z-index: -1;
+    margin-bottom: -100px;
+    filter: brightness(0.4);
+}
+
+.movie-info {
+    display: flex;
+    max-width: 1000px;
+    margin: 0 auto;
+    z-index: 1;
+}
+
+.movie-poster {
+    width: 300px;
+    height: auto;
+    margin-right: 20px;
+}
+
+.movie-details {
+    flex: 1;
+}
+
+
+
+footer {
+    display: flex;
+    justify-content: flex-end; /* Đưa nội dung về phía bên phải */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    padding: 10px 20px;
+    position: fixed; /* Giữ footer cố định ở dưới cùng */
+    bottom: 0;
+    width: 100%;
+    
+    color: white;
+}
+footer p {
+    margin: 0;
+}
+
+.cast-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.actor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 120px;
+}
+
+.actor-photo {
+    width: 100px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}

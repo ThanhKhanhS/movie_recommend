@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>Movie Recommendations</title>
+</head>
+<body>
+    <header>
+        <h1>Hệ Thống Gợi Ý Phim</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="title" placeholder="Nhập tên phim" required>
+            <button type="submit">Tìm kiếm</button>
+        </form>
+    </header>
+
+    <main>
+        <h2>Recommended Movies:</h2>
+        <div class="movie-container">
+            {% if recommendations is not None %}
+                {% for index, movie in recommendations.iterrows %}
+                    <div class="movie-card">
+                        <a href="{% url 'movie_detail' movie.id %}">
+                            <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" alt="{{ movie.title }}" class="movie-poster">
+                            <div class="movie-title">{{ movie.title }}</div>
+                        </a>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No recommendations available.</p>
+            {% endif %}
+        </div>
+    </main>
+    <p>&copy; 2024 Làm bởi by Thanh Khánh. All rights reserved.</p>
+    
+    <script src="{% static 'script.js' %}"></script>
+</body>
+</html>
