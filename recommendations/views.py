@@ -1,3 +1,7 @@
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+import pandas as pd
+import numpy as np
 from django.shortcuts import render
 import joblib
 import pandas as pd
@@ -5,16 +9,39 @@ from thefuzz import process
 import ast
 import logging
 import requests
-from huggingface_hub import hf_hub_download
 # Cấu hình logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 API_KEY = '7f1241a08d90522cd83adf30cbc19d6f'
 # Tải mô hình và dữ liệu
-tfidf = joblib.load('tfidf_model.pkl')
-cosine_sim = joblib.load('cosine_similarity_matrix.pkl')
-df = pd.read_csv('processed_movie_data_10k.csv')
+df = pd.read_csv('1000bophim.csv')
+content_columns = {
+    'content_overview': 0.3,
+    'content_metadata': 0.1,
+    'content_genres': 0.2,
+    'content_keywords': 0.2,
+    'content_companies': 0.05,
+    'content_countries': 0.05,
+    'content_numeric': 0.05,
+    'content_time': 0.05
+}
 
+# Tạo ma trận TF-IDF cho mỗi cột content
+tfidf = TfidfVectorizer(stop_words='english')
+tfidf_matrices = {}
+for col in content_columns.keys():
+    df[col] = df[col].fillna('')
+    tfidf_matrices[col] = tfidf.fit_transform(df[col])
+
+# Tính toán ma trận similarity tổng hợp
+def compute_weighted_similarity(matrices, weights):
+    total_similarity = np.zeros((df.shape[0], df.shape[0]))
+    for col, weight in weights.items():
+        similarity = cosine_similarity(matrices[col])
+        total_similarity += weight * similarity
+    return total_similarity
+
+cosine_sim = compute_weighted_similarity(tfidf_matrices, content_columns)
 def find_closest_title(input_title, choices, limit=5):
     results = process.extract(input_title, choices, limit=limit)
     return results
